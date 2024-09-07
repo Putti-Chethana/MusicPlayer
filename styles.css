@@ -62,23 +62,6 @@ h1 {
     padding: 0 10px;
 }
 
-/* button.back-button {
-    position: absolute; 
-    top: 10px; 
-    left: 10px; 
-    padding: 5px 10px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    background-color: rgba(29, 185, 84, 0.9);
-    color: white;
-    cursor: pointer;
-}
-
-button.back-button:hover {
-    background-color: rgba(29, 185, 84, 1);
-} */
-
 button.back-button {
     position: absolute; /* Set the button to absolute positioning */
     top: 10px; /* Adjust the distance from the top */
@@ -95,7 +78,6 @@ button.back-button {
 button.back-button:hover {
     background-color: rgba(29, 185, 84, 1);
 }
-
 
 audio {
     width: 90%;
@@ -133,7 +115,6 @@ audio::-webkit-media-controls-toggle-closed-captions-button {
     }
 }
 
-
 #search-container {
     display: flex;
     justify-content: center;
@@ -163,4 +144,23 @@ audio::-webkit-media-controls-toggle-closed-captions-button {
 
 #search-button:hover {
     background-color: #1AA34A;
+}
+
+/* Recently Played Container Styles */
+#recently-played-container {
+    padding: 20px;
+    color : white;
+    font-size : 26px;
+}
+
+#recently-played {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+#recently-played .track {
+    width: 200px;
+    margin: 10px;
 }
