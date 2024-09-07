@@ -108,6 +108,42 @@ const displayTrackImagesAndNames = (tracks) => {
 //     trackContainer.style.display = 'none';
 // };
 
+const addToRecentlyPlayed = (track) => {
+    // Check if the track is already in the recently played list
+    if (!recentlyPlayedSongs.find(song => song.id === track.id)) {
+        recentlyPlayedSongs.unshift(track); // Add to the beginning of the array
+
+        // Limit the number of recently played songs to 10
+        if (recentlyPlayedSongs.length > 10) {
+            recentlyPlayedSongs.pop();
+        }
+
+        displayRecentlyPlayed();
+    }
+};
+
+const displayRecentlyPlayed = () => {
+    const recentlyPlayedContainer = document.getElementById('recently-played');
+    recentlyPlayedContainer.innerHTML = '';
+
+    recentlyPlayedSongs.forEach(track => {
+        const trackElement = document.createElement('div');
+        trackElement.className = 'track';
+
+        const imgElement = document.createElement('img');
+        imgElement.src = track.album.images[0].url;
+        imgElement.alt = track.album.name;
+
+        const nameElement = document.createElement('p');
+        nameElement.textContent = track.name;
+
+        trackElement.appendChild(imgElement);
+        trackElement.appendChild(nameElement);
+
+        recentlyPlayedContainer.appendChild(trackElement);
+    });
+};
+
 const addBackButton = () => {
     const backButton = document.createElement('button');
     backButton.textContent = 'Back';
