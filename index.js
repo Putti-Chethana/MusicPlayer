@@ -1,7 +1,7 @@
 let currentlyPlayingAudio = null;
 
 const getTracks = async (query) => {
-    let data = await fetch(`https://v1.nocodeapi.com/deekshu_456/spotify/PHUhLWBmIIWffyxH/search?q=${query}&type=track`);
+    let data = await fetch(`https://v1.nocodeapi.com/varnikar06/spotify/ehIUxAUHtkgLMurF/search?q=tracks`);
     let res = await data.json();
     console.log(res);
     return res.tracks.items;
