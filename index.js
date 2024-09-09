@@ -1,25 +1,28 @@
 let currentlyPlayingAudio = null;
 
 const getTracks = async (query) => {
-    let data = await fetch(`https://v1.nocodeapi.com/varnikar06/spotify/ehIUxAUHtkgLMurF/search?q=tracks`);
-    let res = await data.json();
-    console.log(res);
-    return res.tracks.items;
+    try {
+        const response = await fetch(`https://v1.nocodeapi.com/deekshu_456/spotify/PHUhLWBmIIWffyxH/search?q=${encodeURIComponent(query)}&type=track`);
+        const data = await response.json();
+        console.log(data);  // Log response for debugging
+        return data.tracks.items;
+    } catch (error) {
+        console.error("Error fetching tracks:", error);
+        return [];
+    }
 };
-// const getTracks = async (query) => {
-//     let data = await fetch(`https://v1.nocodeapi.com/chethana/spotify/qdVDHByGYNpWNhUe/search?q=${query}&type=track`);
-//     let res = await data.json();
-//     console.log(res);
-//     return res.tracks.items;
-// };
 
 const displayAlbums = async () => {
+    // Fetch tracks and initialize the albums array
     const dakuTracks = await getTracks("Daku");
     const cruelSummerTracks = await getTracks("Cruel Summer");
+    
+    // Example structure for the albums array
     const albums = [
         { name: "Daku", tracks: dakuTracks },
         { name: "Cruel Summer", tracks: cruelSummerTracks }
     ];
+    
     const albumContainer = document.getElementById('album-container');
     const trackContainer = document.getElementById('track-container');
 
@@ -28,26 +31,30 @@ const displayAlbums = async () => {
         return;
     }
 
+    albumContainer.innerHTML = '';  // Clear previous content
+
     albums.forEach(albumData => {
-        const album = albumData.tracks[0].album;
-        const albumElement = document.createElement('div');
-        albumElement.className = 'album';
-        albumElement.onclick = () => {
-            displayTrackImagesAndNames(albumData.tracks);
-            addBackButton();
-        };
+        if (albumData.tracks.length > 0) {
+            const album = albumData.tracks[0].album;
+            const albumElement = document.createElement('div');
+            albumElement.className = 'album';
+            albumElement.onclick = () => {
+                displayTrackImagesAndNames(albumData.tracks);
+                addBackButton();
+            };
 
-        const imgElement = document.createElement('img');
-        imgElement.src = album.images[0].url;
-        imgElement.alt = album.name;
+            const imgElement = document.createElement('img');
+            imgElement.src = album.images[0].url;
+            imgElement.alt = album.name;
 
-        const nameElement = document.createElement('p');
-        nameElement.textContent = album.name;
+            const nameElement = document.createElement('p');
+            nameElement.textContent = album.name;
 
-        albumElement.appendChild(imgElement);
-        albumElement.appendChild(nameElement);
+            albumElement.appendChild(imgElement);
+            albumElement.appendChild(nameElement);
 
-        albumContainer.appendChild(albumElement);
+            albumContainer.appendChild(albumElement);
+        }
     });
 };
 
@@ -90,23 +97,6 @@ const displayTrackImagesAndNames = (tracks) => {
         }
     });
 };
-
-
-// const addBackButton = () => {
-//     const backButton = document.createElement('button');
-//     backButton.textContent = 'Back';
-//     backButton.onclick = goBackToAlbums;
-//     const trackContainer = document.getElementById('track-container');
-//     trackContainer.insertBefore(backButton, trackContainer.firstChild);
-// };
-
-// const goBackToAlbums = () => {
-//     const albumContainer = document.getElementById('album-container');
-//     const trackContainer = document.getElementById('track-container');
-
-//     albumContainer.style.display = 'flex';
-//     trackContainer.style.display = 'none';
-// };
 
 const addToRecentlyPlayed = (track) => {
     // Check if the track is already in the recently played list
@@ -172,8 +162,4 @@ const searchTracks = async () => {
 
 document.getElementById('search-button').addEventListener('click', searchTracks);
 
-
 document.addEventListener('DOMContentLoaded', displayAlbums);
-
-
-
